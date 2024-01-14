@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 
 const theme = createTheme({
   palette: {
-    primary: { main: "#FFFFFF" },
+    primary: green,
     secondary: green
   }
 })
@@ -18,58 +18,61 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'black', justifyContent: 'center', alignItems: 'center', maxwidth: '100%' }} >
-        <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px', color: 'white' }} >
+      <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxwidth: '100%' }} >
+        <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '55px'   }} >
           <Typography variant="h4">The Pictionary Game</Typography>
         </Container>
-        <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', border: '2px solid black', marginTop: '60px', backgroundColor: 'grey' }} >
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }} >
+        <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', marginTop: '65px', backgroundColor: 'whitesmoke' }} >
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }} >
             <Typography variant="h6">Create Room</Typography>
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }}>
             <Typography>Username :</Typography>
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5px' }}>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
             <TextField
               id="outlined-textarea"
               label="Username"
               placeholder="Enter your Username"
-              multiline
+              multiline 
+              style = {{ width: '60%' }}
             />
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
-            <Button variant="contained">Create Room</Button>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px', marginBottom: '25px' }}>
+            <Button variant="contained" style = {{ backgroundColor: 'rgb(42, 206, 53)', height: '40px' }} >Create Room</Button>
           </Container>
         </Container>
 
-        <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', border: '2px solid black', marginTop: '40px', backgroundColor: 'grey', marginBottom: '50px' }} >
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }} >
+        <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', marginTop: '45px', backgroundColor: 'whitesmoke', marginBottom: '55px' }} >
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }} >
             <Typography variant="h6">Join Room</Typography>
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }}>
             <Typography>Username</Typography>
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5px' }}>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
             <TextField
               id="outlined-textarea"
               label="Username"
               placeholder="Enter your Username"
               multiline
+              style = {{ width: '60%' }}
             />
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }}>
             <Typography>Room ID</Typography>
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5px' }}>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
             <TextField
               id="outlined-textarea"
-              label="ID"
+              label="Room ID"
               placeholder="Enter your ID"
               multiline
+              style = {{ width: '60%' }}
             />
           </Container>
-          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
-            <Button variant="contained">Join Room</Button>
+          <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px', marginBottom: '25px' }}>
+            <Button variant="contained" style = {{ backgroundColor: 'rgb(42, 206, 53)', height: '40px' }} >Join Room</Button>
           </Container>
         </Container>
       </Container>
