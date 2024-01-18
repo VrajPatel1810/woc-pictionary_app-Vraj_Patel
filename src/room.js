@@ -1,4 +1,4 @@
-import { Container, Input, Typography, createTheme } from '@mui/material/';
+import { Container, Typography, createTheme } from '@mui/material/';
 import './App.css';
 import { green } from '@mui/material/colors';
 import { ThemeProvider } from '@mui/material/';
@@ -6,8 +6,9 @@ import * as React from 'react';
 //import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link as LINK } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { io } from 'socket.io-client';
 
 const theme = createTheme({
     palette: {
@@ -16,28 +17,50 @@ const theme = createTheme({
     }
 })
 
-function Room() {
+const socket = io.connect('http://localhost:8080');
+
+function Room(props) {
+
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+
+    const handleLeavebutton = () => {
+        props.pgchk(true);
+        navigate('/');
+    }
+
+    const handleSendbutton = () => {
+        if (message === '') {
+            alert('Please enter a message');
+            return;
+        }
+
+        socket.emit('send-message', { roomID: props.rID, username: props.uname, message });
+        setMessage('');
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', maxWidth: "1500px" }} >
                 <Container style={{ display: 'flex', flex: '2', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '20px', border: '2px solid black', borderRadius: '10px', height: '650px', marginRight: '10px' }} >
                     <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '25px', border: '2px solid black', borderRadius: '10px', height: '400px' }} >
-                        <Typography>User 1</Typography>
+                        <Typography> {props.uname} </Typography>
                     </Container>
                     <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }} >
                         <Button variant="contained" style={{ backgroundColor: 'rgb(42, 206, 53)', height: '40px', marginTop: '25px', width: '100%' }} >Start</Button>
-                        <Container style={{ backgroundColor: 'rgb(42, 206, 53)', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }} > Room ID </Container>
-                        <Button variant="contained" style={{ backgroundColor: 'rgb(42, 206, 53)', height: '40px', marginTop: '25px', marginBottom: '25px', width: '100%' }} >Leave</Button>
+                        <Container style={{ backgroundColor: 'rgb(42, 206, 53)', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '25px', height: '40px', borderRadius: '5px' }} > Room ID: {props.rID} </Container>
+                        <Button variant="contained" style={{ backgroundColor: 'rgb(42, 206, 53)', height: '40px', marginTop: '25px', marginBottom: '25px', width: '100%' }} onClick={handleLeavebutton} >Leave</Button>
                     </Container>
                 </Container>
                 <Container style={{ display: 'flex', flex: '5', justifyContent: 'center', alignItems: 'center', marginTop: '20px', border: '2px solid black', borderRadius: '10px', height: '650px', marginRight: '10px' }} >
                     <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '25px', border: '2px solid black', borderRadius: '10px', height: '500px' }} >
-                        <Typography>Chat</Typography>
+                        <Typography> Chat </Typography>
                     </Container>
                 </Container>
                 <Container style={{ display: 'flex', flex: '3', justifyContent: 'center', alignItems: 'center', marginTop: '20px', border: '2px solid black', borderRadius: '10px', height: '650px' }} >
                     <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '25px', border: '2px solid black', borderRadius: '10px', height: '600px' }} >
-                        <Container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: '25px', marginTop: 'auto', marginBottom: '25px', width: '350px' }} >
+                        <Typography> {props.msg} </Typography>
+                        <Container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: '25px', width: '350px' }} >
                             <TextField
                                 id="outlined-multiline-flexible"
                                 label="Message"
@@ -45,8 +68,10 @@ function Room() {
                                 multiline
                                 maxRows={4}
                                 style={{ width: '100%' }}
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
                             />
-                            <Button variant="contained" style={{ backgroundColor: 'rgb(42, 206, 53)', width: '25%', marginLeft: '3px', height: '55px' }} >SEND</Button>
+                            <Button variant="contained" onClick={handleSendbutton} style={{ backgroundColor: 'rgb(42, 206, 53)', width: '25%', marginLeft: '3px', height: '55px' }} >SEND</Button>
                         </Container>
                     </Container>
                 </Container>
