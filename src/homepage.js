@@ -28,6 +28,7 @@ function HomePage() {
   const [roomID, setRoomID] = useState('');
   const [username, setUsername] = useState('');
   const [pagechk, setPagechk] = useState(true);
+  const [connectedUsernames, setConnectedUsernames] = useState([]);
 
   const handleCreateRoom = () => {
     if (username === '') {
@@ -62,14 +63,23 @@ function HomePage() {
   useEffect(() => {
     socket.on('user-connected', (username) => {
       console.log(`${username} connected`);
+      setConnectedUsernames(prevConnectedUsernames => [...prevConnectedUsernames, username]);
     });
   }, []);
 
   useEffect(() => {
-    socket.on('receive-message', ({ username, message }) => {
-      setMessages(prevMessages => [...prevMessages, `${username}: ${message}`]);
-    });
-  }, []);
+    const handleMessage = ({ username, message }) => {
+        setMessages(prevMessages => [...prevMessages, `${username}: ${message}`]);
+    };
+
+    socket.on('receive-message', handleMessage);
+    
+    // Cleanup function to remove the event listener when the component is unmounted
+    return () => {
+        socket.off('receive-message', handleMessage);
+    };
+}, []);
+
 
 
   return (
@@ -138,7 +148,7 @@ function HomePage() {
               <Button variant="contained" style={{ backgroundColor: 'rgb(42, 206, 53)', height: '40px' }} onClick={handleJoinRoom} >Join Room</Button>
             </Container>
           </Container>
-        </Container> : <Room pgchk={setPagechk} uname={username} rID={roomID} msg={messages} />}
+        </Container> : <Room pgchk={setPagechk} uname={username} rID={roomID} msg={messages} alluser={connectedUsernames}/>}
     </ThemeProvider>
   );
 }

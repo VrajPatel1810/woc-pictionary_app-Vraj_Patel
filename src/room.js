@@ -19,6 +19,18 @@ const theme = createTheme({
 
 const socket = io.connect('http://localhost:8080');
 
+function Prne ({ props }) {
+    return (
+        <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }} >
+            {props.slice(-12).map((item) => (
+                <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }} >
+                    {item}
+                </Container>   
+            ))}
+        </Container>
+    )
+}
+
 function Room(props) {
 
     const [message, setMessage] = useState('');
@@ -39,12 +51,24 @@ function Room(props) {
         setMessage('');
     }
 
+    const Prnm = ({ props }) => {
+        return (
+            <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }} >
+                {props.slice(-12).map((item) => (
+                    <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }} >
+                        {item}
+                    </Container>   
+                ))}
+            </Container>
+        )
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', maxWidth: "1500px" }} >
                 <Container style={{ display: 'flex', flex: '2', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '20px', border: '2px solid black', borderRadius: '10px', height: '650px', marginRight: '10px' }} >
                     <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '25px', border: '2px solid black', borderRadius: '10px', height: '400px' }} >
-                        <Typography> {props.uname} </Typography>
+                        <Prnm  props = {props.alluser} />
                     </Container>
                     <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '25px' }} >
                         <Button variant="contained" style={{ backgroundColor: 'rgb(42, 206, 53)', height: '40px', marginTop: '25px', width: '100%' }} >Start</Button>
@@ -59,7 +83,7 @@ function Room(props) {
                 </Container>
                 <Container style={{ display: 'flex', flex: '3', justifyContent: 'center', alignItems: 'center', marginTop: '20px', border: '2px solid black', borderRadius: '10px', height: '650px' }} >
                     <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '25px', border: '2px solid black', borderRadius: '10px', height: '600px' }} >
-                        <Typography> {props.msg} </Typography>
+                        <Prne props={props.msg} />
                         <Container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: '25px', width: '350px' }} >
                             <TextField
                                 id="outlined-multiline-flexible"
